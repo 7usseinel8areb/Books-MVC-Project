@@ -1,0 +1,63 @@
+﻿@model Book
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    SelectList Categories;
+    string PageName;
+    if (Model != null)
+    {
+        Categories = new SelectList(ViewBag.Categories, "Id", "Name", Model.Category);
+    }
+    else
+    {
+        Categories = new SelectList(ViewBag.Categories, "Id", "Name");
+    }
+    if(Model.Id != 0)
+    {
+        PageName = "Edit";
+    }
+    else
+    {
+        PageName = "Add New";
+    }
+}
+
+<h3 class="text-primary">@PageName Book</h3>
+<hr />
+<form asp-action="Save" asp-controller="Books" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-check" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Author"></label>
+        <input asp-for="Author" class="form-check" />
+        <span asp-validation-for="Author" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Category_id"></label>
+        <select asp-for="Category_id" asp-items="Categories" class="form-check">
+            <option></option>
+        </select>
+        <span asp-validation-for="Category_id" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-floppy"></i>Save</button>
+</form>
+<br />
+
+@section Scripts {
+    @* <script src="~/lib/jquery/dist/jquery.js"></script> *@
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
